@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>a</title>
+  <style>
+    table{
+      border: medium inset black;
+      font-size: 20px;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <button onclick="foo()">
+    НАЖМИ МЕНЯ
+  </button>
+  <p id="suda"> </p>
+  <img id="photo">
+</body>
+<script>
+  function foo(){
+    let userid
+    $.getJSON({
+      url: "https://api.telegram.org/тут был токен/getUpdates",
+    }).done(function( data ) {
+      console.log(data)
+      let first_name = data.result[0].message.from.first_name
+      let last_name = data.result[0].message.from.last_name
+      let username = '@' + data.result[0].message.from.username
+      let text = data.result[0].message.text
+      userid = data.result[0].message.from.id
+      console.log("USERID:" + userid)
+      document.getElementById("suda").innerText = 'Имя: ' + first_name +'\nФамилия: ' + last_name + '\ntg: ' + username + "\nСообщение: " + text
+
+      $.getJSON({
+        url: "https://api.telegram.org/тут был токен/getUserProfilePhotos?limit=1&user_id="+userid,
+      }).done(function( data ) {
+        console.log(data)
+        let photoId = data.result.photos[0][1].file_id
+
+        $.getJSON({
+          url: "https://api.telegram.org/тут был токен/getFile?file_id="+photoId,
+        }).done(function( data ) {
+          console.log(data)
+          let src = "https://api.telegram.org/file/тут был токен/" + data.result.file_path
+          document.getElementById("photo").setAttribute("src", src)
+        })
+
+      })
+
+    });
+
+
+
+
+  }
+</script>
+</html>

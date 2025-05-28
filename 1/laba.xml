@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type="text/css" href="styles.css"?>
+<!DOCTYPE perfomance>
+<perfomance>
+    <header>
+        <p> Студент </p>
+        <p> Группа </p>
+        <p> № </p>
+        <p> балл </p>
+        <p id_active=""> доп </p>
+    </header>
+    <laba>
+        <head>
+            <name expected_cyrillic="true" sex="male"> Олег </name>
+            <group faculty="HHS" term="6"> 4</group>
+        </head>
+        <content>
+            <laba_num id="num"> 1 </laba_num>
+            <mark id="mark"> 5 </mark>
+            <dops id_active="true"> 1 </dops>
+        </content>
+    </laba>
+    <laba>
+        <head>
+            <name expected_cyrillic="true" sex="female"> Юля </name>
+            <group faculty="HHS" term="6"> 4</group>
+        </head>
+        <content>
+            <laba_num id="num"> 2 </laba_num>
+            <mark id="mark"> 3 </mark>
+            <dops id_active="false"> 0 </dops>
+        </content>
+    </laba>
+    <laba>
+        <head>
+            <name expected_cyrillic="true" sex="male"> Макс </name>
+            <group faculty="HHS" term="6"> 3</group>
+        </head>
+        <content>
+            <laba_num id="num"> 1 </laba_num>
+            <mark id="mark"> 2 </mark>
+            <dops id_active="true"> 2 </dops>
+        </content>
+    </laba>
+</perfomance>

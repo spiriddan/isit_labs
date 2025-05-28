@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>implicit flow прикольчики</title>
+</head>
+<body>
+    <h2>implicit flow прикольчики</h2>
+    <button onclick="commentPost()" class="w-50 btn btn-primary btn-lg" style="margin-top: 10px; margin-left: 10px">Оставить комментарий</button>
+    <button onclick="likePost()" class="w-50 btn btn-primary btn-lg" style="margin-top: 50px; margin-left: 10px">Лайкнуть пост</button>
+
+    <script>
+
+        const accessToken = "тут был токен";
+
+        function jsonpRequest(url, callback) {
+            const script = document.createElement('script');
+            script.src = url + `&callback=${callback}`;
+            document.body.appendChild(script);
+        }
+
+        function commentPost() {
+            const ownerId = prompt("Введите ID владельца поста:");
+            if (!ownerId) return alert("Ну вы всё-таки введите");
+
+            const postId = prompt("Введите ID поста, под которым хотите оставить комментарий:");
+            if (!postId) return alert("ID поста не может быть пустым");
+
+            const message = prompt("Введите текст комментария:");
+            if (!message) return alert("Текст комментария не может быть пустым");
+
+            const apiUrl = `https://api.vk.com/method/wall.createComment?owner_id=${ownerId}&post_id=${postId}&message=${message}&access_token=${accessToken}&v=5.131`;
+
+            jsonpRequest(apiUrl, "handleCommentPostResponse");
+        }
+
+        function handleCommentPostResponse(response) {
+            if (response.error) {
+                alert(`Ошибка: ${response.error.error_msg}`);
+            } else {
+                alert("Комментарий успешно добавлен!");
+            }
+        }
+
+        function likePost() {
+            const ownerId = prompt("Введите ID владельца поста:");
+            if (!ownerId) return alert("ID владельца поста не может быть пустым!");
+
+            const postId = prompt("Введите ID поста:");
+            if (!postId) return alert("ID поста не может быть пустым!");
+
+            const apiUrl = `https://api.vk.com/method/likes.add?type=post&owner_id=${ownerId}&item_id=${postId}&access_token=${accessToken}&v=5.131`;
+
+            jsonpRequest(apiUrl, "handleLikePostResponse");
+        }
+
+        function handleLikePostResponse(response) {
+            if (response.error) {
+                alert(`Ошибка: ${response.error.error_msg}`);
+            } else {
+                alert("Пост лайкнут!");
+            }
+        }
+    </script>
+</body>
+</html>

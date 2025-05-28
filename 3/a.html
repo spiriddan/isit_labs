@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>a</title>
+    <style>
+        table{
+            border: medium inset black;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="getFriends()">
+        НАЖМИ МЕНЯ
+    </button>
+    <h1>Друзья мои друзья</h1>
+    <table id="table">
+        <tr>
+            <td>
+                id
+            </td>
+            <td>
+                имя
+            </td>
+            <td>
+                фамилия
+            </td>
+            <td>
+                дата рождения
+            </td>
+            <td>
+                дней до дня рождения
+            </td>
+            <td>
+                невероятный категориальный признак
+            </td>
+        </tr>
+    </table>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+<script>
+    function getFriends(){
+        $.getJSON({
+            url: "https://api.vk.com/method/friends.get?access_token=4d9c13964d9c13964d9c1396fd4eb7066b44d9c4d9c13962a2397df8cdecee168f6535d&v=5.199&fields=bdate&user_id=289090095",
+            jsonp: "callback",
+            dataType: "jsonp"
+        }).done(function( data ) {
+            console.log(data)
+            let users = data.response.items
+
+            let table = document.getElementById("table")
+
+            users.forEach((elem) =>{
+                const row = document.createElement("tr")
+                const keys = ["id", "first_name", "last_name", "bdate"]
+                keys.forEach((key)=>{
+                    const cell = document.createElement("td")
+                    cell.textContent = elem[key]
+                    row.appendChild(cell)
+                })
+
+                let diffDays = 0
+                if (elem["bdate"] !== undefined){
+                    let bd = elem["bdate"]
+                    const now = new Date()
+                    let [day, month, year] = bd.split(".").map(Number)
+                    let targetDate = new Date(2025, month-1, day)
+
+                    if (targetDate < now){
+                        targetDate.setFullYear(2026)
+                    }
+
+                    const diffTime = targetDate - now
+                    diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+                    let cell = document.createElement("td")
+                    cell.textContent = String(diffDays)
+                    row.appendChild(cell)
+                } else{
+                    let cell = document.createElement("td")
+                    cell.textContent = "не понятно..."
+                    row.appendChild(cell)
+                }
+
+                const str = elem["id"].toString()
+                const len = str.length
+                const half = len / 2
+
+                const firstHalf = str.slice(0, half).split('').reduce((sum, digit) => sum + Number(digit), 0)
+                const secondHalf = str.slice(half).split('').reduce((sum, digit) => sum + Number(digit), 0)
+
+                cell = document.createElement("td")
+                if (firstHalf === secondHalf) {
+                    cell.textContent = "Да! (" + String(firstHalf) + ")"
+                } else{
+                    cell.textContent = "Нет (" + String(firstHalf) + " != " + String(secondHalf) + ")"
+                }
+                row.appendChild(cell)
+
+                table.appendChild(row)
+            })
+
+        });
+    }
+</script>
+</html>

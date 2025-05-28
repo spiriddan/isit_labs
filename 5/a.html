@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    <label for="groupId">ID группы</label>
+    <input type="text" id="groupId" value="198646308"><br><br>
+    
+    <label for="limit">количество аккаунтов:</label>
+    <input type="number" id="limit" min="1" placeholder="хотя бы 1"><br><br>
+
+    <button onclick="fetchFriendsOfGroupMembers()">Получить список друзей</button>
+    
+    <pre id="output"></pre>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        const accessToken = "тут был токен";
+
+
+        const groupIdentifier = document.getElementById("groupId").value.trim();
+        const limit = parseInt(document.getElementById("limit").value, 10);
+        const groupUrl = `https://api.vk.com/method/groups.getMembers?group_id=${groupIdentifier}&count=${limit}&access_token=${accessToken}&v=5.131`;
+        $.getJSON({
+            url: groupUrl,
+            jsonp: "callback",
+            dataType: "jsonp"
+        }).done(function( data ){
+            console.log(data)
+        })
+
+    </script>
+</body>
+</html>

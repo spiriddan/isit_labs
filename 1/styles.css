@@ -1,0 +1,38 @@
+#num {
+    color: cornflowerblue;
+    font-weight: bold;
+    font-size: 20pt;
+}
+
+#mark {
+    color: red;
+    font-weight: bolder;
+    font-size: 24pt;
+}
+
+head *{
+    font-style: italic;
+    font-size: 18pt;
+    padding-left: 20pt;
+}
+
+content *{
+    padding-left: 20pt;
+}
+
+laba{
+    display: block;
+}
+
+laba:hover{
+    display: none;
+}
+
+header{
+    display: block;
+}
+
+header *{
+    font-style: normal;
+    padding-left: 15px;
+}
