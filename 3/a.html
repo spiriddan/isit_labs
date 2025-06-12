@@ -42,7 +42,7 @@
 <script>
     function getFriends(){
         $.getJSON({
-            url: "https://api.vk.com/method/friends.get?access_token=4d9c13964d9c13964d9c1396fd4eb7066b44d9c4d9c13962a2397df8cdecee168f6535d&v=5.199&fields=bdate&user_id=289090095",
+            url: "https://api.vk.com/method/friends.get?access_token=ACCESS_TOKEN&v=5.199&fields=bdate&user_id=289090095",
             jsonp: "callback",
             dataType: "jsonp"
         }).done(function( data ) {
